@@ -1,0 +1,25 @@
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+/* td {
+  width: 25%;
+}
+
+th {
+  width: 25%;
+} */
+
+.addCategoryAndFilter {
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+}
+

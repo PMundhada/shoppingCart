@@ -1,0 +1,17 @@
+<div>
+  <h1 mat-dialog-titel>{{title}}</h1>
+  <div mat-dialog-content>
+    <form [formGroup]="formValue">
+      <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <input formControlName="name" matInput placeholder="Category">
+        <mat-hint>Hint</mat-hint>
+      </mat-form-field>
+    </form>
+  </div>
+
+</div>
+<div>
+  <button mat-raised-button color="accent" [disabled]='!formValue.valid' (click)="addCtegory()">{{actionButton}}</button>&nbsp;
+  <button mat-raised-button color="accent">Close</button>
+</div>
