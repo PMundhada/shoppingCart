@@ -16,6 +16,45 @@
   "profile": {
     "name": "typicode"
   },
-  "category": [],
-  "products": []
+  "category": [
+    {
+      "name": "Bike",
+      "id": 5
+    },
+    {
+      "name": "Shoes",
+      "id": 7
+    },
+    {
+      "name": "football",
+      "id": 8
+    },
+    {
+      "name": "Messi",
+      "id": 9
+    },
+    {
+      "name": "Priyanka",
+      "id": 10
+    },
+    {
+      "name": "Mahima",
+      "id": 11
+    }
+  ],
+  "products": [
+    {
+      "name": "Samsung",
+      "price": "456852",
+      "category": "Mobile",
+      "description": "qwerty",
+      "id": 1
+    },
+    {
+      "name": "Ring",
+      "price": "456222",
+      "category": "Jwellery",
+      "id": 2
+    }
+  ]
 }

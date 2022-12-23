@@ -9,10 +9,13 @@ table {
 
 td {
   width: 25%;
+  height: 40px
+
 }
 
 th {
   width: 25%;
+  
 }
 
 .addCategoryAndFilter {
@@ -22,4 +25,19 @@ th {
   gap: 10px;
 
 }
+
+.mat-column-no {
+  width: 12% !important;
+}
+
+.mat-column-name {
+  width: 12% !important;
+ 
+}
+
+.mat-column-action {
+  width: 12% !important;
+  
+}
+
 

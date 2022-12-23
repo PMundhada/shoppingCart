@@ -14,49 +14,95 @@ import { DeleteDailogComponent } from '../dialog/delete-dailog/delete-dailog.com
   styleUrls: ['./manage-category.component.css']
 })
 export class ManageCategoryComponent implements OnInit {
-  categoryList!: MatTableDataSource<any>;
-  displayedColumns: string[] = ['no.', 'name', 'action'];
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  // categoryList: any
+  displayedColumns: string[] = ['index', 'name', 'action'];
+  data : any;
+  categoryList! : MatTableDataSource<any>;
+  pageEvent={pageSize:10,pageIndex:0}
+  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  constructor(private CartService: ShoppingCartService, private dialog: MatDialog) { }
+  constructor(private CartService: ShoppingCartService,
+    private dialog: MatDialog,
+
+  ) { }
 
 
   ngOnInit(): void {
     this.getCatagory()
   }
+  closeDialog() {
+  }
+  // getCatagory() {
+  //   this.CartService.getCategoryByFetching().subscribe((res: any) => {
+  //     this.categoryList = new MatTableDataSource(res)
+  //     this.categoryList = res.map((item: any, index: number) => {
+  //       var tempObject = item;
+  //       tempObject.number = index + 1;
+  //       return tempObject
+  //     })
+  //     this.categoryList.paginator = this.paginator;
+  //     this.categoryList.sort = this.sort;
+  //   })
+  // }
   getCatagory() {
-    this.CartService.getCategoryByFetching().subscribe((res: any) => {
-      // this.categoryList = new MatTableDataSource(res)
-      this.categoryList = res.map( ( item : any,index : number) => {
-         var tempObject = item;
-         tempObject.number = index + 1;
-         return tempObject
+
+    this.CartService.getCategoryByFetching()
+      .subscribe({
+        next: (res: any) => {
+          // this.data = res
+          // this.categoryList = new MatTableDataSource(this.data);
+          // this.categoryList.paginator = this.paginator;
+          // console.log(this.categoryList.paginator, 'paginator')
+          // this.categoryList.sort = this.sort;
+          // this.categoryList = res.map((item: any, index: number) => {
+          //   var tempObject = item;
+          //   tempObject.number = index + 1;
+          //   return tempObject
+          // })
+          this.categoryList = new MatTableDataSource(res);
+          this.categoryList.paginator = this.paginator;
+          this.categoryList.sort = this.sort;
+         
+        },
+        error: (err) => {
+          alert("Error while fetching records")
+        }
       })
-      this.categoryList.paginator = this.paginator;
-      this.categoryList.sort = this.sort;
-    })
+      
+      
+
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.categoryList.filter = filterValue.trim().toLowerCase();
-
+    console.log( this.categoryList.filter)
     if (this.categoryList.paginator) {
       this.categoryList.paginator.firstPage();
     }
   }
-  openDialog(){
+  openDialog() {
+
     this.dialog.open(DialogComponent, {
       width: '30%'
     });
   }
-  openDeleteDialog(element:any){
+
+  openDeleteDialog(element: any) {
+
     this.dialog.open(DeleteDailogComponent, {
       width: '30%',
       data: element
-    });
+    },)
+    // .afterClosed()
+    // .subscribe( (res:any) => {
+    //   console.log('response is:',res)
+    //   this.categoryList = res;
+    // }
+    // )
+
   }
   onEditData(element: any) {
     this.dialog.open(DialogComponent, {
@@ -64,17 +110,13 @@ export class ManageCategoryComponent implements OnInit {
       data: element
     })
   }
-  // onDeleteCategory(element: any){
-  //   this.CartService.deleteData(element.id).subscribe((res) => {
-  //     console.log(element.id, 'res')
-  //     alert('data deleted successfully')
-  //     this.getCatagory()
-  //   })
-  // }
+
+
+
 }
 
 
 
 
-  
+
 

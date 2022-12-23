@@ -1,23 +1,31 @@
 <div class="container">
     <div>
-        
+
 
         <div class="addCategoryAndFilter">
-            <button mat-raised-button color="accent" (click)="openDialog()">Add Category</button>&nbsp;
-            <mat-form-field  class="mat-form-field">
+
+            <mat-form-field class="mat-form-field">
                 <mat-label>Filter</mat-label>
-                <input style="width:'100%' !important;"  matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+                <input style="width:'100%' !important;" matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia"
+                    #input>
             </mat-form-field>
+            <button mat-raised-button color="accent" style="margin-left: 700px;" (click)="openDialog()">Add
+                Category</button>&nbsp;
         </div>
 
         <div style="margin-top:10px">
 
-            <table mat-table [dataSource]="categoryList" matSort class="mat-elevation-z8" >
+            <table mat-table [dataSource]="categoryList" matSort class="mat-elevation-z8">
 
                 <!-- ID Column -->
-                <ng-container matColumnDef="no.">
+                <!-- <ng-container matColumnDef="no">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial no. </th>
                     <td mat-cell *matCellDef="let element"> {{element.number}} </td>
+                </ng-container> -->
+                <ng-container matColumnDef="index">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Index </th>
+                    <td mat-cell *matCellDef="let element; let i = index;">
+                        {{(i)+(pageEvent.pageSize*pageEvent.pageIndex)}}</td>
                 </ng-container>
 
                 <!-- Progress Column -->
@@ -29,23 +37,32 @@
                 <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
                     <td mat-cell *matCellDef="let element">
-                        <button mat-raised-button color="accent" (click)='onEditData(element)'>Edit</button>&nbsp;
+                        <button mat-icon-button color="primary" (click)='onEditData(element)'>
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="openDeleteDialog(element)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <!-- <button mat-raised-button color="primary" (click)='onEditData(element)'>Edit</button>&nbsp;
 
-                        <!-- <button mat-raised-button color="primary" (click)='onDeleteCategory(element)'>Delete</button> -->
-                        <button mat-raised-button color="primary"  (click)="openDeleteDialog(element)">Delete</button>
+                        <button mat-raised-button color="primary" (click)='onDeleteCategory(element)'>Delete</button>
+                        <button mat-raised-button color="warn" (click)="openDeleteDialog(element)">Delete</button> -->
 
                     </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;  let i = index;"></tr>
 
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
                 </tr>
             </table>
 
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+            <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator> -->
+            <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"
+                (page)="pageEvent = $event">
+            </mat-paginator>
         </div>
     </div>
 </div>

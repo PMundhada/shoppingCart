@@ -1,23 +1,34 @@
 
 <div>
-  <button mat-raised-button color="accent" (click)="openDialog()">Add Category</button>&nbsp;
-  <mat-form-field class="mat-form-field">
+ 
+  <mat-form-field class="mat-form-field" >
     <mat-label>Filter</mat-label>
     <input style="width:'100%' !important;" matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
   </mat-form-field>
+  <button mat-raised-button color="accent" style="margin-left: 700px;" (click)="openDialog()">Add Product</button>&nbsp;
 </div>
 <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="productList" matSort>
+  <table mat-table [dataSource]="productList" matSort [formGroup]="searchGroup">
 
     <!-- ID Column -->
-    <ng-container matColumnDef="no.">
+    <!-- <ng-container matColumnDef="no.">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Sr. no </th>
       <td mat-cell *matCellDef="let row"> {{row.number}} </td>
+    </ng-container> -->
+    <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Index </th>
+      <td  mat-cell *matCellDef="let row; let i = index;">{{i}}</td>
     </ng-container>
+
 
     <!-- Progress Column -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name
+        <mat-form-field>
+          <mat-label>Search</mat-label>
+          <input matInput type="text" formControlName="prod" (keyup)="applyFilters($event,'name')" class="no-padding" />
+        </mat-form-field>
+      </th>
       <td mat-cell *matCellDef="let row"> {{row.name}}</td>
     </ng-container>
 
@@ -33,12 +44,24 @@
       <td mat-cell *matCellDef="let row"> {{row.category}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+      <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+    </ng-container>
+
+
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="accent" (click)='onEditData(element)'>Edit</button>&nbsp;
+        <button mat-icon-button color="primary" (click)='onEditData(element)'>
+          <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="openDeleteDialog(element)">
+          <mat-icon>delete</mat-icon>
+      </button>
+        <!-- <button mat-raised-button color="primary" (click)='onEditData(element)'>Edit</button>&nbsp;
 
-        <button mat-raised-button color="primary" (click)='onDeleteCategory(element)'>Delete</button>
+        <button mat-raised-button color="warn" (click)="openDeleteDialog(element)">Delete</button> -->
 
       </td>
     </ng-container>

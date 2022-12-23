@@ -1,26 +1,54 @@
-<div >
+<div *ngIf="isAdd" style="font-size: medium;font-weight: bold; color:blue">
+    Product Added Successfully!!
+</div>
+<div *ngIf="isEdit" style="font-size: medium;font-weight: bold; color:blue">
+    Product Edited Successfully!!
+</div>
+<div>
     <h1 mat-dialog-titel>Add Product</h1>
     <div mat-dialog-content>
         <form [formGroup]="formValue">
-            <mat-form-field  style="width:'100%'" appearance="outline">
+            <mat-form-field style="width:'100%'; padding-bottom: 1px;" appearance="outline">
                 <mat-label>Name</mat-label>
                 <input formControlName="name" matInput placeholder="Name">
             </mat-form-field>
+            <span class="validations"
+                *ngIf="formValue.get('name')?.errors?.['required'] && formValue.get('name')?.touched">
+                Name is required </span>
             <br>
             <mat-form-field style="width:'100%'" appearance="outline">
                 <mat-label>Price</mat-label>
                 <input formControlName="price" matInput placeholder="Price">
             </mat-form-field>
+            <span class="validations"
+                *ngIf="formValue.get('price')?.errors?.['required'] && formValue.get('price')?.touched">
+                Price is required </span>
+            <span class="validations" *ngIf="formValue.get('price')?.errors?.['pattern']">Price format is
+                required</span>
             <br>
             <mat-form-field style="width:'100%'" appearance="outline">
                 <mat-label>Category</mat-label>
                 <input formControlName="category" matInput placeholder="Category">
+            </mat-form-field>
+            <div class="validations"
+                *ngIf="formValue.get('category')?.errors?.['required'] && formValue.get('category')?.touched">
+                Category is required </div>
+                <br>
+            <mat-form-field appearance="fill" style="width:'100%'">
+
+                <mat-label>Description</mat-label>
+
+                <textarea formControlName="description" matInput>
+
+                        </textarea>
+
             </mat-form-field>
         </form>
     </div>
 
 </div>
 <div>
-    <button mat-raised-button color="accent"   (click)="addProduct()">{{actionButton}}</button>&nbsp;
+    <button mat-raised-button color="accent" [disabled]="!(formValue.valid && formValue.dirty)"
+        (click)="addProduct()">{{actionButton}}</button>&nbsp;
     <button mat-raised-button color="accent">Close</button>
 </div>

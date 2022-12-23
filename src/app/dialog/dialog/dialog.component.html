@@ -1,3 +1,9 @@
+<div *ngIf="isShown" style="font-size: medium;font-weight: bold; color:blue">
+  Category Added Successfully!!
+</div>
+<div *ngIf="isEdit" style="font-size: medium;font-weight: bold; color:blue">
+  Category Edited Successfully!!
+</div>
 <div>
   <h1 mat-dialog-titel>{{title}}</h1>
   <div mat-dialog-content>
@@ -5,13 +11,19 @@
       <mat-form-field appearance="outline">
         <mat-label>Category</mat-label>
         <input formControlName="name" matInput placeholder="Category">
-        <mat-hint>Hint</mat-hint>
       </mat-form-field>
+      <span class="validations"
+      *ngIf="formValue.get('name')?.errors?.['required'] && formValue.get('name')?.touched">
+      Name is required </span>
     </form>
   </div>
 
 </div>
-<div>
-  <button mat-raised-button color="accent" [disabled]='!formValue.valid' (click)="addCtegory()">{{actionButton}}</button>&nbsp;
+<div style="float:right">
+  <button mat-raised-button color="primary" 
+  [disabled]="!(formValue.valid && formValue.dirty)"
+    (click)="addCtegory()">{{actionButton}}</button>&nbsp;
   <button mat-raised-button color="accent">Close</button>
 </div>
+
+<!-- <div ngIf="dataAdded">Data Added Sucessfully!!</div> -->
